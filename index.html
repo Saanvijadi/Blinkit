@@ -69,6 +69,14 @@
       font-size: 16px;
     }
 
+    .greeting {
+      display: none;
+      margin-top: 20px;
+      font-size: 16px;
+      color: green;
+      font-weight: bold;
+    }
+
     @media (max-width: 480px) {
       .container {
         margin: 15px;
@@ -89,15 +97,15 @@
 
   <form id="leadForm">
 
-    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="text" name="name" placeholder="Full Name of Candidate" required>
 
-    <input type="tel" name="phone" placeholder="Phone Number" required>
+    <input type="tel" name="phone" placeholder="Mobile Number" required>
 
     <input type="email" name="email" placeholder="Email Address" required>
 
-    <input type="number" name="age" placeholder="Age" required>
+    <input type="number" name="age" placeholder="Age Of Candidate" required>
 
-    <input type="text" name="qualification" placeholder="Qualification" required>
+    <input type="text" name="qualification" placeholder="Highest Qualification" required>
 
     <select name="location" required>
       <option value="">Select Location</option>
@@ -115,7 +123,7 @@
     <div class="checkbox-container">
       <input type="checkbox" id="consent" required>
       <label for="consent">
-        I agree to share my details with the recruitment processing team.
+        I agree to share my details with the Blinkit recruitment processing team.
       </label>
     </div>
 
@@ -123,10 +131,12 @@
 
   </form>
 
+  <div class="greeting" id="greetingMessage"></div>
+
 </div>
 
 <script>
-const scriptURL = "YOUR_WEB_APP_URL";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxD4RSei59IX2IFIeb8k1bXjUGvK1AL2iqZT_YEBp6phM46L5UbWdo--eScg5MVu2gkag/exec";
 
 document.getElementById("leadForm").addEventListener("submit", function(e) {
   e.preventDefault();
@@ -148,11 +158,12 @@ document.getElementById("leadForm").addEventListener("submit", function(e) {
   })
   .then(() => {
 
-    // WhatsApp Redirect
+    // WhatsApp Message
     let message = `Hi, I am ${formData.name}.
 I am interested in Blinkit job.
 
 Phone: ${formData.phone}
+Email: ${formData.email}
 Age: ${formData.age}
 Qualification: ${formData.qualification}
 Location: ${formData.location}
@@ -160,7 +171,16 @@ Role: ${formData.role}`;
 
     let whatsappURL = `https://wa.me/918106404858?text=${encodeURIComponent(message)}`;
 
-    window.location.href = whatsappURL;
+    // Open WhatsApp in new tab/window
+    window.open(whatsappURL, "_blank");
+
+    // Show greeting to candidate
+    const greeting = document.getElementById("greetingMessage");
+    greeting.innerText = `Thank you, ${formData.name}! Your application has been submitted successfully. You can apply again if needed.`;
+    greeting.style.display = "block";
+
+    // Reset the form for next submission
+    this.reset();
 
   })
   .catch(() => alert("Error submitting form"));
