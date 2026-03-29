@@ -91,7 +91,7 @@
 <div class="container">
 
   <!-- LOGO -->
-  <img src="https://via.placeholder.com/100" class="logo" alt="Logo">
+  <img src="Logo.png" class="logo" alt="Logo">
 
   <h2>Blinkit Hiring Form</h2>
 
